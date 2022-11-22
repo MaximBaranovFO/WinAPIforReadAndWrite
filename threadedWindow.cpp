@@ -204,15 +204,21 @@ unsigned int __stdcall mythread(void* data)
                                 GetModuleHandle(NULL),
                                 (HMENU)NULL);*/
 
+        tmpThreadedWPtwo.setCurentInstance(wndclass.hInstance);
+
+        tmpThreadedWPthree.doThreeThread();
         windowPanel1 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 1"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                0, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
+        tmpThreadedWPtwo.setCurentWnd(windowPanel1);
         windowPanel2 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 2"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                303, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
         windowPanel3 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 3"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                606, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
+
+        tmpThreadedWPtwo.doTwoThread();
 
         if (window)
         {

@@ -123,6 +123,11 @@ void threadedWPone::setCurentBukva(char bukvaForSet){
 }
 LRESULT CALLBACK threadedWPone::WindowProcedureOne(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 {
+    if(msg == WM_CREATE){
+
+        MessageBox(NULL, _T("Create window?"), _T("Error!"), MB_OK | MB_ICONHAND);
+        bool bCreated = true;
+    }
 
    	// выборка и обработка сообщений
 	switch (msg)

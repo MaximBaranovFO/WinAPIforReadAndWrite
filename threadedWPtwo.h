@@ -9,6 +9,16 @@
 
 
 using namespace std;
+
+enum { ID_LABEL = 1,ID_IMAGE,ID_EDIT,ID_LIST,ID_BUTTON1,ID_COMBO,ID_BUTTON2,ID_BUTTON0,
+ID_BUTTON3,ID_BUTTON4,ID_BUTTON5,ID_BUTTON6,ID_BUTTON7,ID_BUTTON8,ID_BUTTON9,
+ID_BUTTONPLUS, ID_BUTTONMINUS, ID_BUTTONTIME, ID_BUTTONDIVIDE, ID_BUTTONEQUAL, ID_BUTTONRESULT,
+ID_TABCTRL = 1,
+ID_EDITPANEL = 2,
+BTN_ADD = 3,
+BTN_DEL = 4,
+BTN_CLR = 5,
+MAX_TAB_LEN = 15};
 class threadedWPtwo
 {
 public:
@@ -28,6 +38,14 @@ public:
     WNDCLASSEX getWndClass(char bukva);
     char getBukva(void);
     void setCurentBukva(char bukvaForSet);
+
+    HINSTANCE getInstance(void);
+    void setCurentInstance(HINSTANCE instanceForSet);
+    HWND getWnd(void);
+    void setCurentWnd(HWND wndForSet);
+    HWND getButton(void);
+    void setCurentButton(HWND buttonForSet);
+
     ~threadedWPtwo(){
 
 
@@ -39,6 +57,11 @@ private:
     int b;
     bool isUsedB;
     char currentBukva = 'a';
+
+    HINSTANCE g_hInstanceParent;
+    HWND		hwndParent;
+    HWND button0Parent;
+
     std::map<std::string, std::string> g_pages;
     std::mutex g_pages_mutex;
     void save_page(const std::string &url);
@@ -46,6 +69,24 @@ private:
     ThreadedWndMap iterTWM;
 };
 
+    HINSTANCE threadedWPtwo::getInstance(void){
+        return g_hInstanceParent;
+    }
+    void threadedWPtwo::setCurentInstance(HINSTANCE instanceForSet){
+        g_hInstanceParent = instanceForSet;
+    }
+    HWND threadedWPtwo::getWnd(void){
+        return hwndParent;
+    }
+    void threadedWPtwo::setCurentWnd(HWND wndForSet){
+        hwndParent = wndForSet;
+    }
+    HWND threadedWPtwo::getButton(void){
+        return button0Parent;
+    }
+    void threadedWPtwo::setCurentButton(HWND buttonForSet){
+        button0Parent = buttonForSet;
+    }
 void threadedWPtwo::save_page(const std::string &url)
 {
     // simulate a long page fetch
@@ -81,6 +122,14 @@ int threadedWPtwo::doMain()
 }
 unsigned int __stdcall mythreadTwo(void* data)
 {
+    HINSTANCE g_hInst;
+    HWND		hwnd;
+    HWND button0;
+    threadedWPtwo valThis;
+    g_hInst = valThis.getInstance();
+    hwnd = valThis.getWnd();
+    button0 = CreateWindow("Button","0",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,220,35,35,hwnd,(HMENU)ID_BUTTON0,g_hInst,0);
+
     std::cout <<"this is work:\nmythreadTwo:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
