@@ -374,6 +374,11 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
             windowAddition(windowIn, msgIn, wpIn, lpIn);
             //ShowPopupMenu(windowIn, curPosIter, 0);
 
+
+            //tmpThreadedWPone.setWndClass(tmpThreadedWPone.getBukva(),wndclassWal);
+            //bool returnetdWal = tmpThreadedWPone.Create();
+            tmpThreadedWPone.doOneThread();
+            tmpThreadedWPone.doTwoThread();
         }
 
 	    if(msgIn == WM_LBUTTONDBLCLK)
@@ -466,6 +471,7 @@ unsigned int windowAddition(HWND windowInPrev, UINT msgInPrev, WPARAM wpInPrev, 
 
 
     getWndClass(nowValAZ);
+    tmpThreadedWPone.setWndClass(tmpThreadedWPone.getBukva(),wndclassWal);
     std::cout <<"\nRegisterClassEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     if (RegisterClassEx(&wndclassWal))
@@ -514,10 +520,7 @@ unsigned int windowAddition(HWND windowInPrev, UINT msgInPrev, WPARAM wpInPrev, 
                606, 0, 300,300, windowWal,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
 
 
-        tmpThreadedWPone.setWndClass(tmpThreadedWPone.getBukva(),wndclassWal);
-        //bool returnetdWal = tmpThreadedWPone.Create();
-        tmpThreadedWPone.doOneThread();
-        tmpThreadedWPone.doTwoThread();
+
 
         if (windowWal)
         {
