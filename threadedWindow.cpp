@@ -210,7 +210,7 @@ unsigned int __stdcall mythread(void* data)
         windowPanel1 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 1"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                0, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
-        tmpThreadedWPtwo.setCurentWnd(windowPanel1);
+        tmpThreadedWPtwo.setCurentWnd(window);
         windowPanel2 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 2"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                303, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
@@ -422,9 +422,10 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
             int yPos = GET_Y_LPARAM(lpIn);
 
 	    countSize++;
-            std::cout <<"\ndefault msg:Id this thread from C++ API: 0x"<< std::hex << std::this_thread::get_id()<<" count of: "<<countSize
-            <<" msg: "<<msgIn<<"\n x: "<<x<<" left "<<ti.rect.left<<" right "<<ti.rect.right<<" X "<<xPos
-            <<"\n y: "<<y<<" bottom "<<ti.rect.bottom<<" top "<<ti.rect.top<<" Y "<<yPos;
+            std::cout <<"\n 0389 default msg:Id this thread from C++ API: 0x"<< std::hex << std::this_thread::get_id()
+            <<" count of: "<<countSize
+            <<" msg: "<<msgIn<<"\n 1225 x: "<<x<<" left "<<ti.rect.left<<" right "<<ti.rect.right<<" X "<<xPos
+            <<"\n 0910 y: "<<y<<" bottom "<<ti.rect.bottom<<" top "<<ti.rect.top<<" Y "<<yPos;
 
 
 

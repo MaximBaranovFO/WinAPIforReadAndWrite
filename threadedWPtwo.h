@@ -129,7 +129,7 @@ unsigned int __stdcall mythreadTwo(void* data)
     g_hInst = valThis.getInstance();
     hwnd = valThis.getWnd();
     button0 = CreateWindow("Button","0",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,220,35,35,hwnd,(HMENU)ID_BUTTON0,g_hInst,0);
-
+    ShowWindow(hwnd, SW_SHOWDEFAULT);
     std::cout <<"this is work:\nmythreadTwo:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }

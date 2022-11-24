@@ -87,7 +87,7 @@ int threadedWPone::doMain()
 unsigned int __stdcall mythreadOne(void* data)
 {
 
-    std::cout <<"this is work:\nmythreadOne:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n mythreadOne: inner Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
 int threadedWPone::doOneThread(void){
@@ -101,7 +101,7 @@ int threadedWPone::doOneThread(void){
     //do{
         //whait
     //}while(true);
-    std::cout <<"this is work:\nHANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n threadedWPone::doOneThread, HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleOne, INFINITE);
     ReleaseMutex(myhandleOne);
@@ -129,6 +129,9 @@ LRESULT CALLBACK threadedWPone::WindowProcedureOne(HWND window, UINT msg, WPARAM
         bool bCreated = true;
     }
 
+    if(msg == WM_APP){
+        MessageBox(NULL, _T("WM_APP, window?"), _T("Error!"), MB_OK | MB_ICONHAND);
+    }
    	// выборка и обработка сообщений
 	switch (msg)
 	{

@@ -81,7 +81,7 @@ int threadedWPthree::doMain()
 }
 unsigned int __stdcall mythreadThree(void* data)
 {
-    std::cout <<"this is work:\nmythreadThree:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 0346 mythreadThree:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
 int threadedWPthree::doThreeThread(void){
@@ -95,7 +95,7 @@ int threadedWPthree::doThreeThread(void){
     //do{
         //whait
     //}while(true);
-    std::cout <<"this is work:\nHANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 1173 HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleThree, INFINITE);
     ReleaseMutex(myhandleThree);
