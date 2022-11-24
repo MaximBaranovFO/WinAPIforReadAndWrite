@@ -87,7 +87,7 @@ int threadedWPone::doMain()
 unsigned int __stdcall mythreadOne(void* data)
 {
 
-    std::cout <<"this is work:\n mythreadOne: inner Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 0521 mythreadOne: inner Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
 int threadedWPone::doOneThread(void){
@@ -101,7 +101,7 @@ int threadedWPone::doOneThread(void){
     //do{
         //whait
     //}while(true);
-    std::cout <<"this is work:\n threadedWPone::doOneThread, HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 1237 threadedWPone::doOneThread, HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleOne, INFINITE);
     ReleaseMutex(myhandleOne);

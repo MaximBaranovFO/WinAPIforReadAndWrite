@@ -130,7 +130,7 @@ unsigned int __stdcall mythreadTwo(void* data)
     hwnd = valThis.getWnd();
     button0 = CreateWindow("Button","0",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,220,35,35,hwnd,(HMENU)ID_BUTTON0,g_hInst,0);
     ShowWindow(hwnd, SW_SHOWDEFAULT);
-    std::cout <<"this is work:\nmythreadTwo:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 0257 mythreadTwo:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
 int threadedWPtwo::doTwoThread(void){
@@ -144,7 +144,7 @@ int threadedWPtwo::doTwoThread(void){
     //do{
         //whait
     //}while(true);
-    std::cout <<"this is work:\nHANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 0886 HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleTwo, INFINITE);
     ReleaseMutex(myhandleTwo);

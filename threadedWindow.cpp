@@ -62,6 +62,10 @@ LRESULT CALLBACK WindowProcedure(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 
     tmpThreadedWPthree.doThreeThread();
 
+        tmpThreadedWPtwo.setCurentInstance(GetModuleHandle(NULL));
+        tmpThreadedWPtwo.setCurentWnd(window);
+        tmpThreadedWPtwo.doTwoThread();
+
     /*if (test_message == msg) {
         //printf("Got it !\n"); // to console
         std::cout <<"\nif msg:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id()<<" count of: "<<countSize
@@ -204,13 +208,13 @@ unsigned int __stdcall mythread(void* data)
                                 GetModuleHandle(NULL),
                                 (HMENU)NULL);*/
 
-        tmpThreadedWPtwo.setCurentInstance(wndclass.hInstance);
 
-        tmpThreadedWPthree.doThreeThread();
+
+
         windowPanel1 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 1"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                0, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
-        tmpThreadedWPtwo.setCurentWnd(window);
+
         windowPanel2 = CreateWindowEx(WS_EX_CLIENTEDGE|WS_EX_DLGMODALFRAME, _T("STATIC"), _T("Panel 2"),
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                303, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
@@ -218,7 +222,7 @@ unsigned int __stdcall mythread(void* data)
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                606, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
 
-        tmpThreadedWPtwo.doTwoThread();
+
 
         if (window)
         {
