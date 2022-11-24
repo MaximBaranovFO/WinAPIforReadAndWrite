@@ -25,6 +25,8 @@
 
 using namespace std;
 
+
+
     static BOOL g_bModalState = FALSE; //Is messagebox shown
 
 UINT test_message = 0;
@@ -60,11 +62,7 @@ LRESULT CALLBACK mouseKeyboardMove(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WindowProcedure(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 {
 
-    tmpThreadedWPthree.doThreeThread();
 
-        tmpThreadedWPtwo.setCurentInstance(GetModuleHandle(NULL));
-        tmpThreadedWPtwo.setCurentWnd(window);
-        tmpThreadedWPtwo.doTwoThread();
 
     /*if (test_message == msg) {
         //printf("Got it !\n"); // to console
@@ -176,7 +174,7 @@ unsigned int __stdcall mythread(void* data)
     isMinWndClassCreated();
 
     isWndClassListEmpty = false;
-    std::cout <<"\nRegisterClassEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"\n 0660 RegisterClassEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     if (RegisterClassEx(&wndclass))
     {
@@ -223,22 +221,63 @@ unsigned int __stdcall mythread(void* data)
                606, 0, 300,300, window,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
 
 
+        HINSTANCE g_hInst;
+        HWND	hwnd;
+        HWND button0;
+        HWND button1;
+        HWND button2;
+        HWND button3;
+        HWND button4;
+        HWND button5;
+        HWND button6;
+        HWND button7;
+        HWND button8;
+        HWND button9;
+        HWND buttonDivide;
+        HWND buttonTime;
+        HWND buttonMinus;
+        HWND buttonPlus;
+        HWND buttonEqual;
+        HWND buttonResult;
+        HWND static_label;
+        HWND edit;
+            static_label = CreateWindow("Static","Please Enter A Number",WS_CHILD | WS_VISIBLE,35,15,175,25,windowPanel1,0,g_hInst,0);
+			edit = CreateWindow("Edit", NULL,WS_BORDER | NULL | WS_CHILD | WS_VISIBLE | NULL | NULL ,35,45,175,20,windowPanel1,(HMENU)ID_EDIT,g_hInst,0);
+
+			button0 = CreateWindow("Button","0",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,220,35,35,windowPanel1,(HMENU)ID_BUTTON0,g_hInst,0);
+			button1 = CreateWindow("Button","1",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,35,170,35,35,windowPanel1,(HMENU)ID_BUTTON1,g_hInst,0);
+			button2 = CreateWindow("Button","2",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,170,35,35,windowPanel1,(HMENU)ID_BUTTON2,g_hInst,0);
+			button3 = CreateWindow("Button","3",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,125,170,35,35,windowPanel1,(HMENU)ID_BUTTON3,g_hInst,0);
+			button4 = CreateWindow("Button","4",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,35,120,35,35,windowPanel1,(HMENU)ID_BUTTON4,g_hInst,0);
+			button5 = CreateWindow("Button","5",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,120,35,35,windowPanel1,(HMENU)ID_BUTTON5,g_hInst,0);
+			button6 = CreateWindow("Button","6",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,125,120,35,35,windowPanel1,(HMENU)ID_BUTTON6,g_hInst,0);
+			button7 = CreateWindow("Button","7",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,35,70,35,35,windowPanel1,(HMENU)ID_BUTTON7,g_hInst,0);
+			button8 = CreateWindow("Button","8",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,70,35,35,windowPanel1,(HMENU)ID_BUTTON8,g_hInst,0);
+			button9 = CreateWindow("Button","9",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,125,70,35,35,windowPanel1,(HMENU)ID_BUTTON9,g_hInst,0);
+
+			buttonDivide = CreateWindow("Button","/",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,70,35,35,windowPanel1,(HMENU)ID_BUTTONDIVIDE,g_hInst,0);
+			buttonTime = CreateWindow("Button","*",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,120,35,35,windowPanel1,(HMENU)ID_BUTTONTIME,g_hInst,0);
+			buttonMinus = CreateWindow("Button","-",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,170,35,35,windowPanel1,(HMENU)ID_BUTTONMINUS,g_hInst,0);
+			buttonPlus = CreateWindow("Button","+",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,220,35,35,windowPanel1,(HMENU)ID_BUTTONPLUS,g_hInst,0);
+			buttonEqual = CreateWindow("Button","=",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,125,220,35,35,windowPanel1,(HMENU)ID_BUTTONEQUAL,g_hInst,0);
+
+			buttonResult = CreateWindow("Button","Result",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,15,220,55,35,windowPanel1,(HMENU)ID_BUTTONRESULT,g_hInst,0);
 
         if (window)
         {
-            std::cout <<"\ntrue CreateWindowEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+            std::cout <<"\n 1004 true CreateWindowEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
             SendMeMessage(window);
             ShowWindow(window, SW_SHOWDEFAULT);
             MSG msg;
             while (GetMessage(&msg, 0, 0, 0)) DispatchMessage(&msg);
         } else {
-            std::cout <<"\nfalse CreateWindowEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
-            std::cout <<"\nGetLastError() returns: "<<GetLastError()<<"\n";
+            std::cout <<"\n 1019 false CreateWindowEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+            std::cout <<"\n 0844 GetLastError() returns: "<<GetLastError()<<"\n";
             MessageBox(NULL, _T("Create window failed!"), _T("Error!"), MB_OK | MB_ICONERROR);
         }
     } else {
-        std::cout <<"\nfalse RegisterClassEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
-        std::cout <<"\nGetLastError() returns: "<<GetLastError()<<"\n";
+        std::cout <<"\n 0499 false RegisterClassEx:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+        std::cout <<"\n 0167 GetLastError() returns: "<<GetLastError()<<"\n";
     }
     //std::cout << "iterTWM.at('a') == " << iterTWM.at('a') << std::endl;
     WNDCLASSEX nowTmpWndclass = iterTWM.at('a');
@@ -422,16 +461,21 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
             bCreated = true;
         }
              }
-            int xPos = GET_X_LPARAM(lpIn);
-            int yPos = GET_Y_LPARAM(lpIn);
+        int xPos = GET_X_LPARAM(lpIn);
+        int yPos = GET_Y_LPARAM(lpIn);
 
 	    countSize++;
-            std::cout <<"\n 0389 default msg:Id this thread from C++ API: 0x"<< std::hex << std::this_thread::get_id()
+        std::cout <<"\n 0389 default msg:Id this thread from C++ API: 0x"<< std::hex << std::this_thread::get_id()
             <<" count of: "<<countSize
             <<" msg: "<<msgIn<<"\n 1225 x: "<<x<<" left "<<ti.rect.left<<" right "<<ti.rect.right<<" X "<<xPos
             <<"\n 0910 y: "<<y<<" bottom "<<ti.rect.bottom<<" top "<<ti.rect.top<<" Y "<<yPos;
 
 
+                tmpThreadedWPthree.doThreeThread();
+
+        tmpThreadedWPtwo.setCurentInstance(GetModuleHandle(NULL));
+        tmpThreadedWPtwo.setCurentWnd(windowIn);
+        tmpThreadedWPtwo.doTwoThread();
 
         return 0;
 }

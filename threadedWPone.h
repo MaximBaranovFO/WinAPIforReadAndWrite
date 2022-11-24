@@ -226,7 +226,7 @@ int threadedWPone::doTwoThread(void){
     //do{
         //whait
     //}while(true);
-    std::cout <<"this is work:\nHANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"this is work:\n 0910 HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleOne, INFINITE);
     ReleaseMutex(myhandleOne);
