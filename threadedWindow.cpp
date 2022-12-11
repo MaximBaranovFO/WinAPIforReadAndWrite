@@ -14,6 +14,8 @@
 #include "threadedWPone.h"
 #include "threadedWPtwo.h"
 #include "threadedWPthree.h"
+#include "threadedWPfour.h"
+
 
 
 
@@ -40,9 +42,13 @@ static HWND hWndGlobal;
 static UINT uIDGlobal;
 static UINT uCallbackMsgGlobal;
 
+HWND edit;
+HWND editWal;
+
 static threadedWPone tmpThreadedWPone;
 static threadedWPtwo tmpThreadedWPtwo;
 static threadedWPthree tmpThreadedWPthree;
+static threadedWPfour tmpThreadedWPfour;
 
 typedef std::map<char, WNDCLASSEX> ThreadedWndMap;
 ThreadedWndMap iterTWM;
@@ -58,11 +64,14 @@ void RemoveTrayIcon(HWND, UINT);
 unsigned int panelAddition(HWND, UINT, WPARAM, LPARAM);
 unsigned int windowAddition(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK mouseKeyboardMove(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK mouseKeyboardMoveSecond(HWND, UINT, WPARAM, LPARAM);
 //long __stdcall WindowProcedure(HWND window, unsigned int msg, WPARAM wp, LPARAM lp)
 LRESULT CALLBACK WindowProcedure(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 {
 
 
+	PAINTSTRUCT	ps;
+	HDC			hdc;
 
     /*if (test_message == msg) {
         //printf("Got it !\n"); // to console
@@ -88,17 +97,136 @@ LRESULT CALLBACK WindowProcedure(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 
     case WM_PAINT:
          // Вызывается, когда окно обновляется
+            hdc = BeginPaint(window, &ps);
+			EndPaint(window, &ps);
          return(0);
+    case WM_COMMAND: //Command from Child windows and menus are under this message
+
+            switch(LOWORD(wp)) //the ID is wParam
+            {
+                case ID_BUTTON0: //check for our button ID
+					{
+					// Static labels dont do messages
+                    //we can set the text directly though
+                        MessageBox(window, TEXT("Вы кликнули! BUTTON0"), TEXT("событие"), 0);
+						SetWindowText(edit,"0");
+						break;
+					}
+
+				case ID_BUTTON1:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON1"), TEXT("событие"), 0);
+						SetWindowText(edit,"1");
+						break;
+					}
+
+				case ID_BUTTON2:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON2"), TEXT("событие"), 0);
+						SetWindowText(edit,"2");
+						break;
+					}
+
+				case ID_BUTTON3:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON3"), TEXT("событие"), 0);
+						SetWindowText(edit,"3");
+						break;
+					}
+
+				case ID_BUTTON4:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON4"), TEXT("событие"), 0);
+						SetWindowText(edit,"4");
+						break;
+					}
+
+				case ID_BUTTON5:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON5"), TEXT("событие"), 0);
+						SetWindowText(edit,"5");
+						break;
+					}
+
+				case ID_BUTTON6:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON6"), TEXT("событие"), 0);
+						SetWindowText(edit,"6");
+						break;
+					}
+
+				case ID_BUTTON7:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON7"), TEXT("событие"), 0);
+						SetWindowText(edit,"7");
+						break;
+					}
+
+				case ID_BUTTON8:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON8"), TEXT("событие"), 0);
+						SetWindowText(edit,"8");
+						break;
+					}
+
+				case ID_BUTTON9:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON9"), TEXT("событие"), 0);
+						SetWindowText(edit,"9");
+						break;
+					}
+
+				case ID_BUTTONPLUS:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON PLUS"), TEXT("событие"), 0);
+						SetWindowText(edit,"+");
+						break;
+					}
+
+				case ID_BUTTONMINUS:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON MINUS"), TEXT("событие"), 0);
+						SetWindowText(edit,"-");
+						break;
+					}
+
+				case ID_BUTTONTIME:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON TIME"), TEXT("событие"), 0);
+						SetWindowText(edit,"*");
+						break;
+					}
+
+				case ID_BUTTONDIVIDE:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON DIVIDE"), TEXT("событие"), 0);
+						SetWindowText(edit,"/");
+						break;
+					}
+				case ID_BUTTONEQUAL:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON EQUAL"), TEXT("событие"), 0);
+						SetWindowText(edit,"=");
+						break;
+					}
+                case ID_BUTTONRESULT:
+					{
+					    MessageBox(window, TEXT("Вы кликнули! BUTTON RESULT"), TEXT("событие"), 0);
+						SetWindowText(edit,"Result");
+						break;
+					}
+            }//switch.
+			break;
 	case WM_LBUTTONUP:
 		 // реакция на сообщение
-		MessageBox(window, TEXT("Вы кликнули!"), TEXT("событие"), 0);
+		MessageBox(window, TEXT("Вы кликнули! 0755"), TEXT("событие"), 0);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);  // реакция на сообщение
 		break;
 	default:
 	    mouseKeyboardMove(window, msg, wp, lp);
-
+        mouseKeyboardMoveSecond(window, msg, wp, lp);
 		// все сообщения не обработанные Вами обработает сама Windows
 		return DefWindowProc(window, msg, wp, lp);
 	}
@@ -240,9 +368,13 @@ unsigned int __stdcall mythread(void* data)
         HWND buttonEqual;
         HWND buttonResult;
         HWND static_label;
-        HWND edit;
+
             static_label = CreateWindow("Static","Please Enter A Number",WS_CHILD | WS_VISIBLE,35,15,175,25,windowPanel1,0,g_hInst,0);
 			edit = CreateWindow("Edit", NULL,WS_BORDER | NULL | WS_CHILD | WS_VISIBLE | NULL | NULL ,35,45,175,20,windowPanel1,(HMENU)ID_EDIT,g_hInst,0);
+
+
+			tmpThreadedWPfour.setWndHWNDClass('a',edit);
+
 
 			button0 = CreateWindow("Button","0",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,220,35,35,windowPanel1,(HMENU)ID_BUTTON0,g_hInst,0);
 			button1 = CreateWindow("Button","1",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,35,170,35,35,windowPanel1,(HMENU)ID_BUTTON1,g_hInst,0);
@@ -254,6 +386,14 @@ unsigned int __stdcall mythread(void* data)
 			button7 = CreateWindow("Button","7",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,35,70,35,35,windowPanel1,(HMENU)ID_BUTTON7,g_hInst,0);
 			button8 = CreateWindow("Button","8",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,80,70,35,35,windowPanel1,(HMENU)ID_BUTTON8,g_hInst,0);
 			button9 = CreateWindow("Button","9",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,125,70,35,35,windowPanel1,(HMENU)ID_BUTTON9,g_hInst,0);
+
+			TOOLINFO ti9 = { 0 };
+            ti9.cbSize = TTTOOLINFO_V1_SIZE;
+            ti9.uFlags = TTF_SUBCLASS;
+            ti9.hwnd = button9;
+            ti9.hinst = GetModuleHandle(0);
+            ti9.lpszText = (TCHAR *)_T("This is Tooltip for Button 9.");
+            GetClientRect(button9, &ti9.rect);
 
 			buttonDivide = CreateWindow("Button","/",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,70,35,35,windowPanel1,(HMENU)ID_BUTTONDIVIDE,g_hInst,0);
 			buttonTime = CreateWindow("Button","*",BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE ,170,120,35,35,windowPanel1,(HMENU)ID_BUTTONTIME,g_hInst,0);
@@ -410,9 +550,17 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
 	    int x = screen_rect.right / 2 - 150;
 	    int y = screen_rect.bottom / 2 - 75;
 
+	    //WM_MOUSEACTIVATE 0x0021
+	    //WM_SETCURSOR 0x0020
+	    //WM_PARENTNOTIFY 0x0210
+
 	    POINT curPosIter;
 
 
+	    if(msgIn == WM_MENUSELECT)
+            MessageBox(window, TEXT("Поступила команда MENU SELECT: " + LOWORD(wpIn)), TEXT("событие"), 0);
+	    if(msgIn == WM_COMMAND)
+            MessageBox(window, TEXT("Поступила команда: " + LOWORD(wpIn)), TEXT("событие"), 0);
 	    if(msgIn == WM_RBUTTONDBLCLK)
             std::cout << "\nR***RBUTTONDBLCLK" <<" X "<< GET_X_LPARAM(lpIn) <<" Y "<< GET_Y_LPARAM(lpIn);
 	    if(msgIn == WM_RBUTTONDOWN)
@@ -428,6 +576,7 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
             //bool returnetdWal = tmpThreadedWPone.Create();
             tmpThreadedWPone.doOneThread();
             tmpThreadedWPone.doTwoThread();
+            tmpThreadedWPfour.doFourThread();
         }
 
 	    if(msgIn == WM_LBUTTONDBLCLK)
@@ -461,6 +610,14 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
             bCreated = true;
         }
              }
+
+        if(msgIn == WM_APP){
+            std::cout <<"\n 0454   ***   0454   ***   ***   ***   0454   ***   ***   ***   0454   ***";
+
+            SendMessage(editWal, LB_ADDSTRING, 0,(LPARAM)(LPSTR)"---   +++   ---   flow   0454   ---   +++   ---   0454   ---   +++   ---   0454   ---   +++   ---");
+        }
+
+
         int xPos = GET_X_LPARAM(lpIn);
         int yPos = GET_Y_LPARAM(lpIn);
 
@@ -468,7 +625,7 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
         std::cout <<"\n 0389 default msg:Id this thread from C++ API: 0x"<< std::hex << std::this_thread::get_id()
             <<" count of: "<<countSize
             <<" msg: "<<msgIn<<"\n 1225 x: "<<x<<" left "<<ti.rect.left<<" right "<<ti.rect.right<<" X "<<xPos
-            <<"\n 0910 y: "<<y<<" bottom "<<ti.rect.bottom<<" top "<<ti.rect.top<<" Y "<<yPos;
+            <<"\n 0910 y: "<<y<<" bottom "<<ti.rect.bottom<<" top "<<ti.rect.top<<" Y "<<yPos<<" LOWORD "<<LOWORD(wpIn);
 
 
                 tmpThreadedWPthree.doThreeThread();
@@ -478,6 +635,13 @@ LRESULT CALLBACK mouseKeyboardMove(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARA
         tmpThreadedWPtwo.doTwoThread();
 
         return 0;
+}
+LRESULT CALLBACK mouseKeyboardMoveSecond(HWND windowIn, UINT msgIn, WPARAM wpIn, LPARAM lpIn){
+    if(msgIn == WM_APP){
+            std::cout <<"\n 0716   ***   0716   ***   ***   ***   0716   ***   ***   ***   0716   ***";
+
+            SendMessage(editWal, LB_ADDSTRING, 0,(LPARAM)(LPSTR)"---   +++   ---   flow   0716   ---   +++   ---   0716   ---   +++   ---   0716   ---   +++   ---");
+        }
 }
 unsigned int windowAddition(HWND windowInPrev, UINT msgInPrev, WPARAM wpInPrev, LPARAM lpInPrev){
 
@@ -574,8 +738,10 @@ unsigned int windowAddition(HWND windowInPrev, UINT msgInPrev, WPARAM wpInPrev, 
                WS_CHILD|WS_VISIBLE|SS_CENTER|SS_CENTERIMAGE|SS_SUNKEN,
                606, 0, 300,300, windowWal,  (HMENU)NULL, GetModuleHandle(0), (LPVOID)NULL);
 
+        editWal = CreateWindow("LISTBOX", NULL,WS_BORDER | NULL | WS_CHILD | WS_VISIBLE | NULL | NULL ,5,5,280,280,windowWalPanel1,(HMENU)ID_EDITWAL,wndclassWal.hInstance,0);
 
 
+        SendMessage(editWal, LB_ADDSTRING, 0,(LPARAM)(LPSTR)"---   +++   ---   flow   ---   +++   ---");
 
         if (windowWal)
         {
@@ -642,7 +808,7 @@ WNDCLASSEX initialWndClass(void){
     return wndclassWalInitial;
 }
 unsigned int panelAddition(HWND windowInPanel, UINT msgInPanel, WPARAM wpInPanel, LPARAM lpInPanel){
-          switch (msgInPanel) {
+switch (msgInPanel) {
 
 
 
@@ -1010,7 +1176,7 @@ unsigned int panelAddition(HWND windowInPanel, UINT msgInPanel, WPARAM wpInPanel
 
                       nidInputed.uCallbackMessage = uCallbackMsgGlobal;
                       ExtractIconEx( "ico/cloud_icon_124378.ico", 0, NULL, &(nidInputed.hIcon), 1 );
-      strcpy       (nidInputed.szTip, "Tool Tip view 5");
+            strcpy(nidInputed.szTip, "Tool Tip view 5");
       Shell_NotifyIcon( NIM_ADD, &nidInputed );
         }while(true);
 

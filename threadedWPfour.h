@@ -9,31 +9,32 @@
 
 
 using namespace std;
-class threadedWPone
+
+class threadedWPfour
 {
 public:
     std::thread tOne1;
     bool isThreadStarted = false;
     //Constructors / Destructors
-    threadedWPone() noexcept{
+    threadedWPfour() noexcept{
         isThreadStarted = false;
     };
 
-
+    HWND getWndHWNDClass(char bukva);
     int doMain(void);
-    int doOneThread(void);
+    int doFourThread(void);
     int doTwoThread(void);
     int closeOneThread(void);
     //~bThOne();
-    void setWndClass(char bukva, WNDCLASSEX wndClassInputed);
-    WNDCLASSEX getWndClass(char bukva);
+    void setWndHWNDClass(char bukva, HWND wndClassInputed);
+
     char getBukva(void);
     void setCurentBukva(char bukvaForSet);
 
     LRESULT CALLBACK WindowProcedureOne(HWND, UINT, WPARAM, LPARAM);
     LRESULT CALLBACK initalWindowProcedure(HWND, UINT, WPARAM, LPARAM);
     WNDCLASSEX initialWndClass(void);
-    ~threadedWPone(){
+    ~threadedWPfour(){
 
 
     };
@@ -47,12 +48,12 @@ private:
     std::map<std::string, std::string> g_pages;
     std::mutex g_pages_mutex;
     void save_page(const std::string &url);
-    typedef std::map<char, WNDCLASSEX> ThreadedWndMap;
+    typedef std::map<char, HWND> ThreadedWndMap;
     ThreadedWndMap iterTWM;
 
 };
 
-void threadedWPone::save_page(const std::string &url)
+void threadedWPfour::save_page(const std::string &url)
 {
     // simulate a long page fetch
     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -61,7 +62,7 @@ void threadedWPone::save_page(const std::string &url)
     std::lock_guard<std::mutex> guard(g_pages_mutex);
     g_pages[url] = result;
 }
-int threadedWPone::doMain()
+int threadedWPfour::doMain()
 {
     std::thread t1 = thread();
     std::thread t2 = thread();
@@ -85,24 +86,36 @@ int threadedWPone::doMain()
 
     return 0;
 }
-unsigned int __stdcall mythreadOne(void* data)
+HWND __stdcall threadedWPfour::getWndHWNDClass(char bukva){
+    HWND returnetd;// = iterTWM.at(bukva);
+    iterTWM.at(bukva);
+    return returnetd;
+}
+unsigned int __stdcall mythreadFour(void* data)
 {
+
+
+    std::thread tFour = thread();
+    //tFour();
+    HWND nowEdit;// = getWndHWNDClass('a');
+    //nowEdit = threadedWPfour::iterTWM.at('a');
+    SetWindowText(nowEdit,"Result");
     //Сюда добавить переменную окна edit и обновлять ее цифрой генератор цифр?
-    std::cout <<"\nthis is work:\n 0521 mythreadOne: inner Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"\nthis is work:\n 0489 mythreadFour: inner Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
     return 0;
 }
-int threadedWPone::doOneThread(void){
+int threadedWPfour::doFourThread(void){
     /**std::thread tOne1 = thread();
         tOne1.detach();
         isThreadStarted = true;*/
             HANDLE myhandleOne;
     unsigned threadIDOne;
 
-    myhandleOne = (HANDLE)_beginthreadex(NULL, 0, &mythreadOne, NULL, 0, &threadIDOne);
+    myhandleOne = (HANDLE)_beginthreadex(NULL, 0, &mythreadFour, NULL, 0, &threadIDOne);
     //do{
         //whait
     //}while(true);
-    std::cout <<"\nthis is work:\n 1237 threadedWPone::doOneThread, HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
+    std::cout <<"\nthis is work:\n 0947 threadedWPfour::doFourThread, HANDLE:Id from C++ API: 0x"<< std::hex << std::this_thread::get_id();
 
     WaitForSingleObject(myhandleOne, INFINITE);
     ReleaseMutex(myhandleOne);
@@ -110,19 +123,17 @@ int threadedWPone::doOneThread(void){
         return 0;
 }
 
-void threadedWPone::setWndClass(char bukva, WNDCLASSEX wndClassInputed){
+void threadedWPfour::setWndHWNDClass(char bukva, HWND wndClassInputed){
     iterTWM.insert(ThreadedWndMap::value_type(bukva,wndClassInputed));
 }
-WNDCLASSEX threadedWPone::getWndClass(char bukva){
-    return iterTWM.at(bukva);
-}
-char threadedWPone::getBukva(void){
+
+char threadedWPfour::getBukva(void){
     return 'a';
 }
-void threadedWPone::setCurentBukva(char bukvaForSet){
+void threadedWPfour::setCurentBukva(char bukvaForSet){
     currentBukva = bukvaForSet;
 }
-LRESULT CALLBACK threadedWPone::WindowProcedureOne(HWND window, UINT msg, WPARAM wp, LPARAM lp)
+LRESULT CALLBACK threadedWPfour::WindowProcedureOne(HWND window, UINT msg, WPARAM wp, LPARAM lp)
 {
     if(msg == WM_CREATE){
 
@@ -148,7 +159,7 @@ LRESULT CALLBACK threadedWPone::WindowProcedureOne(HWND window, UINT msg, WPARAM
 	return 0;
 
 }
-unsigned int __stdcall twoCreate(void* data)
+unsigned int __stdcall fourCreate(void* data)
     {
         MessageBox(NULL, _T("CreateWindowEx start!\n"), _T("Error!"), MB_OK | MB_ICONASTERISK);
     HINSTANCE hinst;
@@ -159,7 +170,7 @@ unsigned int __stdcall twoCreate(void* data)
     hinst = GetModuleHandle( NULL );
     memset( &wnd, 0, sizeof( wnd ) );
     wnd.cbSize = sizeof( wnd );
-    wnd.lpszClassName = "threadedWPone::twoCreate";
+    wnd.lpszClassName = "threadedWPfour::fourCreate";
     wnd.lpfnWndProc = (WNDPROC)&threadedWPone::WindowProcedureOne;
 
     wnd.hIcon = NULL;//LoadIcon(NULL, IDI_WINLOGO); // Стандартная иконка
@@ -216,14 +227,14 @@ unsigned int __stdcall twoCreate(void* data)
     }
     return 0;
 }
-int threadedWPone::doTwoThread(void){
+int threadedWPfour::doTwoThread(void){
     /**std::thread tOne1 = thread();
         tOne1.detach();
         isThreadStarted = true;*/
             HANDLE myhandleOne;
     unsigned threadIDTwo;
 
-    myhandleOne = (HANDLE)_beginthreadex(NULL, 0, &twoCreate, NULL, 0, &threadIDTwo);
+    myhandleOne = (HANDLE)_beginthreadex(NULL, 0, &fourCreate, NULL, 0, &threadIDTwo);
     //do{
         //whait
     //}while(true);
@@ -234,7 +245,7 @@ int threadedWPone::doTwoThread(void){
     CloseHandle(myhandleOne);
         return 0;
 }
-LRESULT CALLBACK threadedWPone::initalWindowProcedure(
+LRESULT CALLBACK threadedWPfour::initalWindowProcedure(
    HWND   hWndOne,
    UINT   MsgOne,
    WPARAM wParamOne,
@@ -248,7 +259,7 @@ LRESULT CALLBACK threadedWPone::initalWindowProcedure(
     }
 return DefWindowProc(hWndOne, MsgOne, wParamOne, lParamOne);
 }
-WNDCLASSEX threadedWPone::initialWndClass(void){
+WNDCLASSEX threadedWPfour::initialWndClass(void){
     SYSTEMTIME st, lt;
 
     GetSystemTime(&st);
@@ -295,7 +306,7 @@ WNDCLASSEX threadedWPone::initialWndClass(void){
     wndclassWalInitial.hbrBackground = (HBRUSH)(NULL_BRUSH);
     return wndclassWalInitial;
 }
-int threadedWPone::closeOneThread(){
+int threadedWPfour::closeOneThread(){
      tOne1.~thread();
      return 0;
 }
