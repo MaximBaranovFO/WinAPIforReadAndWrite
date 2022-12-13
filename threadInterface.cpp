@@ -31,9 +31,9 @@ int main()
 
 
 
-        ClassInterfaceOneThreaded *someThOneInt;
+        //ClassInterfaceOneThreaded *someThOneInt;
 		//someThOneInt->baseValForWndClass();
-        someThOneInt->baseSomeThreadedWndClass();
+        //someThOneInt->baseSomeThreadedWndClass();
 	//InitializeCriticalSection(&g_cs);
 	Sleep(4000);
 	//LeaveCriticalSection(&g_cs);
@@ -49,8 +49,8 @@ unsigned __stdcall Fun1(LPVOID lpParam)
 		if (data->tickets > 0)
 		{
 			Sleep(1);
-			cout << "fun1: " << data->id++ ;
-			cout << " *** thread 1 :sell ticket: " << data->tickets-- << endl;
+			cout << "\nfun1: " << data->id++ ;
+			cout << "\n *** thread 1 :sell ticket: " << data->tickets-- << endl;
 			//LeaveCriticalSection(&g_cs);
 		}
 		else
@@ -71,8 +71,8 @@ unsigned __stdcall Fun2(LPVOID lpParam)
 		if (data->tickets > 0)
 		{
 			Sleep(1);
-			cout << "fun2: " << data->id++ ;
-			cout << " === thread 2:sell ticket: " << data->tickets-- << endl;
+			cout << "\nfun2: " << data->id++ ;
+			cout << "\n === thread 2:sell ticket: " << data->tickets-- << endl;
 		//	LeaveCriticalSection(&g_cs);
 		}
 		else
@@ -92,8 +92,8 @@ unsigned __stdcall Fun3(LPVOID lpParam)
 		if (data->tickets > 0)
 		{
 			Sleep(1);
-			cout << "fun3: " << data->id++ ;
-			cout << " === thread 3:sell ticket: " << data->tickets-- << endl;
+			cout << "\nfun3: " << data->id++ ;
+			cout << "\n === thread 3:sell ticket: " << data->tickets-- << endl;
 		//	LeaveCriticalSection(&g_cs);
 		}
 		else
@@ -102,9 +102,9 @@ unsigned __stdcall Fun3(LPVOID lpParam)
 			break;
 		}
 
-		//ClassInterfaceOneThreaded *someThOneInt;
+		ClassInterfaceOneThreaded *someThOneInt;
 		//someThOneInt->baseValForWndClass();
-        //someThOneInt->baseSomeThreadedWndClass();
+        someThOneInt->baseSomeThreadedWndClass();
 	}
 	return 0;
 }

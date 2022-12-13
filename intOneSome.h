@@ -6,5 +6,6 @@ public:
 };
 
 void X::do_lengthy_work(){
-    cout << "Some for InterfaceThreaded: " << std::this_thread::get_id() << endl;
+    std::this_thread::yield();
+    cout << "\n+++ +++ +++Some for InterfaceThreaded: " << std::this_thread::get_id() << endl;
 }
