@@ -2,6 +2,7 @@
 #include <process.h>
 #include <iostream>
 #include "intOneTh.h"
+#include "intTwoTh.h"
 using namespace std;
 
 typedef struct  _STRUCT_DATA_
@@ -105,6 +106,10 @@ unsigned __stdcall Fun3(LPVOID lpParam)
 		ClassInterfaceOneThreaded *someThOneInt;
 		//someThOneInt->baseValForWndClass();
         someThOneInt->baseSomeThreadedWndClass();
+
+        ClassInterfaceTwoThreaded *someThTwoInt;
+		//someThOneInt->baseValForWndClass();
+        someThTwoInt->baseTwoSomeThreadedWndClass();
 	}
 	return 0;
 }
