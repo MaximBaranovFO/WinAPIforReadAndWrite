@@ -61,6 +61,7 @@ void ClassInterfaceOneThreaded::baseSomeThreadedWndClass(void){
     X my_x;
     std::thread t(&X::do_lengthy_work, &my_x);
     t.join();
+    baseThreadedWndClass();
 }
 WNDCLASSEX ClassInterfaceOneThreaded::baseValForWndClass(void){
 

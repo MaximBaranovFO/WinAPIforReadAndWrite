@@ -36,8 +36,8 @@ unsigned __stdcall FunTwoInterfaceThreaded(LPVOID lpParam)
 		if (dataTwoThreaded->tickets > 0)
 		{
 			Sleep(1);
-			cout << "funInterfaceThreaded: " << dataTwoThreaded->id++ ;
-			cout << " *** thread 1 Interface Threaded :sell ticket: " << dataTwoThreaded->tickets-- << endl;
+			cout << "funTwoInterfaceThreaded: " << dataTwoThreaded->id++  << std::this_thread::get_id() << endl;
+			cout << " ***   ***   |||   ***   *** thread 2 Interface Threaded :sell ticket: " << dataTwoThreaded->tickets-- << endl;
 			//LeaveCriticalSection(&g_cs);
 		}
 		else
@@ -61,6 +61,7 @@ void ClassInterfaceTwoThreaded::baseTwoSomeThreadedWndClass(void){
     Xtwo my_xTwo;
     std::thread tTwo(&Xtwo::do_lengthy_work, &my_xTwo);
     tTwo.join();
+    baseTwoThreadedWndClass();
 }
 WNDCLASSEX ClassInterfaceTwoThreaded::baseValForWndClass(void){
 

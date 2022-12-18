@@ -3,6 +3,7 @@
 #include <iostream>
 #include "intOneTh.h"
 #include "intTwoTh.h"
+#include "intThreeTh.h"
 using namespace std;
 
 typedef struct  _STRUCT_DATA_
@@ -59,6 +60,9 @@ unsigned __stdcall Fun1(LPVOID lpParam)
 			//LeaveCriticalSection(&g_cs);
 			break;
 		}
+        ClassInterfaceOneThreaded *someThOneInt;
+		//someThOneInt->baseValForWndClass();
+        someThOneInt->baseSomeThreadedWndClass();
 	}
 	return 0;
 }
@@ -81,6 +85,9 @@ unsigned __stdcall Fun2(LPVOID lpParam)
 			//LeaveCriticalSection(&g_cs);
 			break;
 		}
+        ClassInterfaceTwoThreaded *someThTwoInt;
+		someThTwoInt->baseTwoThreadedWndClass();
+        someThTwoInt->baseTwoSomeThreadedWndClass();
 	}
 	return 0;
 }
@@ -103,13 +110,11 @@ unsigned __stdcall Fun3(LPVOID lpParam)
 			break;
 		}
 
-		ClassInterfaceOneThreaded *someThOneInt;
+        ClassInterfaceThreeThreaded *someThThreeInt;
 		//someThOneInt->baseValForWndClass();
-        someThOneInt->baseSomeThreadedWndClass();
+        someThThreeInt->baseThreeSomeThreadedWndClass();
 
-        ClassInterfaceTwoThreaded *someThTwoInt;
-		//someThOneInt->baseValForWndClass();
-        someThTwoInt->baseTwoSomeThreadedWndClass();
+
 	}
 	return 0;
 }
