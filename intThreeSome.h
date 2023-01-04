@@ -95,7 +95,11 @@ WNDCLASSEX Xthree::baseValForWndClass(void){
 
 	if(RegisterClassEx(&main))
     {
+
         static HWND window = NULL;
+
+        MessageBox(window, TEXT("Вы запустили! 0154"), TEXT("событие"), 0);
+
                TCHAR szWindowClass[]= "QWERTY";
         window = ::CreateWindowEx(0,
                                 TEXT("tI_EmptyProject"),
@@ -135,7 +139,7 @@ LRESULT CALLBACK Xthree::WindowProcedure(HWND window, UINT msg, WPARAM wp, LPARA
 	{
 
     case WM_CREATE:
-
+          MessageBox(window, TEXT("Вы запустили! 1151"), TEXT("событие"), 0);
           Xthree::AddTrayIcon( window, 1, WM_APP, 0 );
         // Вызывается, когда впервые создается окно
          return(0);
